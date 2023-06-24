@@ -1,6 +1,8 @@
 import matplotlib.pyplot as chart
 import numpy as np
 
+np.set_printoptions(precision=15)
+
 
 def GetRawData (command_file_path, real_file_path):
     with open(command_file_path) as command_file, open(real_file_path) as real_file:
@@ -38,8 +40,18 @@ REAL_FORWARD    = np.array(MOOG_DATA_raw[2], dtype=float)
 REAL_SIDE       = np.array(MOOG_DATA_raw[3], dtype=float)
 
 # rendering
-chart.plot(COMMAND_FORWARD[1000:2500])
-chart.plot(REAL_FORWARD[1000:2500])
+chart.figure()
+
+chart.subplot(1, 2, 1)
+chart.title('Command vs Real (forward)')
+chart.plot(COMMAND_FORWARD[1000:2500], ':')
+chart.plot(REAL_FORWARD[1000:2500], ':')
+
+chart.subplot(1, 2, 2)
+chart.title('Command/Real: forward vs real')
+chart.plot(COMMAND_SIDE[1000:2500], COMMAND_FORWARD[1000:2500])
+chart.plot(REAL_SIDE[1000:2500], REAL_FORWARD[1000:2500])
+
 chart.show()
 
 #TODO
